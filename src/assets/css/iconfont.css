@@ -1,0 +1,63 @@
+@font-face {
+    font-family: "iconfont"; /* Project id 3873686 */
+    src: url('//at.alicdn.com/t/c/font_3873686_qf6x9b1vgfa.woff2?t=1675132909102') format('woff2'),
+         url('//at.alicdn.com/t/c/font_3873686_qf6x9b1vgfa.woff?t=1675132909102') format('woff'),
+         url('//at.alicdn.com/t/c/font_3873686_qf6x9b1vgfa.ttf?t=1675132909102') format('truetype');
+  }
+  
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .icon-add-circle:before {
+    content: "\e664";
+  }
+  
+  .icon-ashbin:before {
+    content: "\e665";
+  }
+  
+  .icon-customer-service:before {
+    content: "\e66a";
+  }
+  
+  .icon-edit:before {
+    content: "\e66e";
+  }
+  
+  .icon-history:before {
+    content: "\e674";
+  }
+  
+  .icon-file-open:before {
+    content: "\e670";
+  }
+  
+  .icon-menu:before {
+    content: "\e677";
+  }
+  
+  .icon-modular:before {
+    content: "\e678";
+  }
+  
+  .icon-sign-out:before {
+    content: "\e67d";
+  }
+  
+  .icon-toggle-left:before {
+    content: "\e680";
+  }
+  
+  .icon-toggle-right:before {
+    content: "\e681";
+  }
+  
+  .icon-work:before {
+    content: "\e683";
+  }
+  
