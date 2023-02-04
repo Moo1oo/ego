@@ -28,7 +28,8 @@
         <div id="chart"></div>
       </div>
       <div class="area">
-        比例分配
+        <div class="title">产品销售额</div>
+        <div id="chartpie"></div>
       </div>
     </div>
     <div class="home-footer">
@@ -39,13 +40,16 @@
         <div class="text item">
           <el-row>
             <el-col :span="8">
-              <div>111</div>
+              <div>今日订单数</div>
+              <div class="num">{{ downData.curOrderCount }}</div>
             </el-col>
             <el-col :span="8">
-             <div>222</div>
+              <div>汇总确认订单</div>
+              <div class="num">{{ downData.curCollect }}</div>
             </el-col>
             <el-col :span="8">
-             <div>333</div>
+              <div>累计金额</div>
+              <div class="num">{{ downData.curMoney }}</div>
             </el-col>
           </el-row>
         </div>
@@ -57,13 +61,16 @@
         <div class="text item">
           <el-row>
             <el-col :span="8">
-              <div>111</div>
+              <div>本月订单数</div>
+              <div class="num">{{ downData.orderCount }}</div>
             </el-col>
             <el-col :span="8">
-             <div>222</div>
+              <div>汇总确认订单</div>
+              <div class="num">{{ downData.collect }}</div>
             </el-col>
             <el-col :span="8">
-             <div>333</div>
+              <div>累计金额</div>
+              <div class="num">{{ downData.money }}</div>
             </el-col>
           </el-row>
         </div>
@@ -83,10 +90,12 @@
 </template>
 
 <script>
+import * as echarts from 'echarts'
 export default {
   data () {
     return {
-      list: []
+      list: [],
+      downData: []
     }
   },
   filters: {
@@ -97,12 +106,111 @@ export default {
   },
   mounted () {
     this.getHomeCount()
+    this.getHomeFormat()
+    this.getHomeOrder()
   },
   methods: {
+    draw1 (xaxisData, yAmountData, yNumData) {
+      var chartDom = document.getElementById('chart')
+      var myChart = echarts.init(chartDom)
+      var option
+
+      option = {
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: ['销售额', '销售量']
+        },
+        xAxis: {
+          type: 'category',
+          data: xaxisData
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '销售额',
+            data: yAmountData,
+            type: 'line',
+            smooth: true
+          },
+          {
+            name: '销售量',
+            type: 'bar',
+            stack: 'Total',
+            areaStyle: {},
+            emphasis: {
+              focus: 'series'
+            },
+            data: yNumData
+          }
+        ]
+      }
+
+      option && myChart.setOption(option)
+    },
+    draw2 (pieData) {
+      var chartDom = document.getElementById('chartpie')
+      var myChart = echarts.init(chartDom)
+      var option
+
+      option = {
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left'
+        },
+        series: [
+          {
+            name: '销售额',
+            type: 'pie',
+            radius: '50%',
+            data: pieData,
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      }
+
+      option && myChart.setOption(option)
+    },
     async getHomeCount () {
       const res = await this.$api.getHomeCount()
       console.log(res.data.data.list)
       this.list = res.data.data.list
+    },
+    async getHomeFormat () {
+      const res = await this.$api.getHomeFormat()
+      console.log('这是折线图数据', res.data.result.data.sale_money)
+      const data = res.data.result.data.sale_money
+      const xaxis = []
+      const yNum = []
+      const yAmount = []
+      const pieData = []
+      for (const item of data) {
+        // 获取获取折线图需要的数据
+        xaxis.push(item.name)
+        yNum.push(item.num)
+        yAmount.push(item.total_amount)
+        const i = { value: item.total_amount, name: item.name }
+        pieData.push(i)
+      }
+      this.draw1(xaxis, yAmount, yNum)
+      this.draw2(pieData)
+    },
+    async getHomeOrder () {
+      const res = await this.$api.getHomeOrder()
+      console.log('这是最下边的订单信息', res.data.list)
+      this.downData = res.data.list
     }
   }
 }
@@ -111,7 +219,6 @@ export default {
 <style lang="less" scoped>
   .home {
     margin: 10px;
-    background-color: rgb(240, 235, 235);
   }
   .header {
     display: flex;
@@ -164,21 +271,33 @@ export default {
     margin-right: 20px;
     padding: 10px;
     // background-color: orange;
+    #chart{
+      width: 100%;
+      height: 100%;
+    }
     }
     .area {
       flex: 1;
       background: #fff;
       padding: 10px;
       // background-color: red;
+      #chartpie {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
   .home-footer {
     display: flex;
     padding-left: 20px;
     margin-bottom: 20px;
+    text-align: center;
     .box-card {
       flex: 1;
       margin-right: 30px;
+      .num {
+        margin-top: 8px;
+      }
       span {
         font-weight: 600;
       }
