@@ -11,6 +11,14 @@ const api = {
   },
   getHomeOrder () {
     return axios.get(base.homeOrder)
+  },
+  // 产品列表,可传page参数
+  getGoodsList (params) {
+    return axios.get(base.goodsList, { params })
+  },
+  // 搜索产品 可传search参数
+  getGoodsSearch (params) {
+    return axios.get(base.goodsSearch, { params })
   }
 }
 

@@ -11,7 +11,7 @@ const Mock = require("mockjs");
 const data = require("./data/format.json");
 
 /* 
-    首页-销量额等数据统计
+    1. 首页-销量额等数据统计
 */
 router.get("/home/dataCount", (req, res) => {
     res.send(
@@ -59,14 +59,14 @@ router.get("/home/dataCount", (req, res) => {
   });
   
   /* 
-     首页折线图数据统计 月销量、月销售额
+     2. 首页折线图数据统计 月销量、月销售额
   */
   router.get("/home/format", (req, res) => {
     res.send(data);
   });
   
   /* 
-     首页 -今日 -订单统计
+     3. 首页 -今日 -订单统计
   */
   router.get("/home/orderinfo", (req, res) => {
     res.send(
@@ -104,5 +104,59 @@ router.get("/home/dataCount", (req, res) => {
       })
     );
   });
+
+/**
+ * 4. 商品列表：获取分页 {total:'',arr:[{},{},{}],pagesize:8,}
+ * 参数：page 页码
+ */
+router.get("/goods/projectList", (req, res) => {
+  const page = req.query.page || 1;
+  const sqlLen = "select * from project where id";
+  sqlFn(sqlLen, null, (data) => {
+    let len = data.length;
+    const sql =
+      "select * from project order by id desc limit 8 offset " + (page - 1) * 8;
+    sqlFn(sql, null, (result) => {
+      if (result.length > 0) {
+        res.send({
+          status: 200,
+          data: result,
+          pageSize: 8,
+          total: len,
+        });
+      } else {
+        res.send({
+          status: 500,
+          msg: "暂无数据",
+        });
+      }
+    });
+  });
+});
+
+/**
+ * 5. 商品查询接口 search
+ * 参数：search
+ */
+router.get("/goods/search", (req, res) => {
+  var search = req.query.search;
+  const sql =
+    "select * from project where concat(`title`,`sellPoint`,`descs`) like '%" +
+    search +
+    "%'";
+  sqlFn(sql, null, (result) => {
+    if (result.length > 0) {
+      res.send({
+        status: 200,
+        result,
+      });
+    } else {
+      res.send({
+        status: 500,
+        msg: "暂无数据",
+      });
+    }
+  });
+});
 
 module.exports = router
