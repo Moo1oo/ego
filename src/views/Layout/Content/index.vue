@@ -43,9 +43,9 @@ export default {
 <style lang="less" scoped>
   .header {
     background-color: #1e78bf;
-    height: 50px;
+    height: 40px;
     width: 100%;
-    line-height: 50px;
+    line-height: 40px;
     color: #fff;
     .icon {
       float: left;

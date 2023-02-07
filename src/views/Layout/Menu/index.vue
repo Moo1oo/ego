@@ -3,7 +3,7 @@
     <div class="name">
         <p v-show="!isCollapse">易购后台管理系统</p>
     </div>
-    <el-menu default-active="/"
+    <el-menu :default-active="$route.path"
     class="el-menu-vertical-demo"
     :collapse="isCollapse"
     router
