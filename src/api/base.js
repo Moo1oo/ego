@@ -6,7 +6,8 @@ const base = {
   homeOrder: '/api/home/orderinfo',
   // 产品管理的接口
   goodsList: '/api/goods/projectList', // 产品列表
-  goodsSearch: '/api/goods/search' // 产品查询
+  goodsSearch: '/api/goods/search', // 产品查询
+  goodDeleteById: '/api/goods/deleteItemById' // 通过ID删除商品
 }
 
 export default base

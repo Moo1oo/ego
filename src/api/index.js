@@ -19,6 +19,10 @@ const api = {
   // 搜索产品 可传search参数
   getGoodsSearch (params) {
     return axios.get(base.goodsSearch, { params })
+  },
+  // 根据ID删除商品 可传参数id
+  getGoodDeleteById (params) {
+    return axios.get(base.goodDeleteById, { params })
   }
 }
 

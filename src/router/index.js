@@ -29,6 +29,14 @@ const routes = [
             path: 'goodscategory',
             name: 'GoodsCategory',
             component: () => import('../views/GoodsManage/Category')
+          },
+          {
+            path: 'addgoods',
+            name: 'AddGoods',
+            component: () => import('../views/GoodsManage/List/AddGoods.vue'),
+            meta: {
+              activeMenu: '/goods/goodslist'
+            }
           }
         ]
       },

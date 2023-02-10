@@ -3,7 +3,7 @@
     <div class="name">
         <p v-show="!isCollapse">易购后台管理系统</p>
     </div>
-    <el-menu :default-active="$route.path"
+    <el-menu :default-active="activeMenu()"
     class="el-menu-vertical-demo"
     :collapse="isCollapse"
     router
@@ -61,7 +61,17 @@
 
 <script>
 export default {
-  props: ['isCollapse']
+  props: ['isCollapse'],
+  methods: {
+    activeMenu () {
+      let path = this.$route.path
+      if (this.$route.meta.activeMenu !== null) {
+        path = this.$route.meta.activeMenu
+      }
+      console.log(path)
+      return path
+    }
+  }
 }
 </script>
 

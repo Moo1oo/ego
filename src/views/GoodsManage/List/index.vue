@@ -17,7 +17,7 @@
       </div>
       <div class="add">
         <el-row>
-          <el-button type="success" round size="small">添加商品</el-button>
+          <el-button type="success" round size="small" @click="addGoods">添加商品</el-button>
           <el-button type="danger" round size="small">批量删除</el-button>
         </el-row>
       </div>
@@ -86,6 +86,9 @@ export default {
   },
   methods: {
     dayjs,
+    addGoods () {
+      this.$router.push('/goods/addgoods')
+    },
     // 获取产品列表的数据
     async getGoodsList (page) {
       const res = await this.$api.getGoodsList({ page })
@@ -138,7 +141,39 @@ export default {
       console.log(index, row)
     },
     handleDelete (index, row) {
-      console.log(index, row)
+      console.log(index, row.id)
+      this.$confirm('此操作将永久删除该商品, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // 在这里执行删除操作
+        this.deleteOne(row.id)
+        this.$api.getGoodDeleteById({ id: row.id })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    // 删除单个商品的接口
+    async deleteOne (id) {
+      const res = await this.$api.getGoodDeleteById({ id })
+      console.log('删除单个产品的接口数据', res.data)
+      if (res.data.status === 200) {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+        // 删除成功之后还需要更新视图
+        this.getGoodsList()
+      } else {
+        this.$message({
+          type: 'warning',
+          message: '删除失败'
+        })
+      }
     }
   }
 }
