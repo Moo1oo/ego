@@ -23,6 +23,9 @@ const api = {
   // 根据ID删除商品 可传参数id
   getGoodDeleteById (params) {
     return axios.get(base.goodDeleteById, { params })
+  },
+  getGoodsType (params) {
+    return axios.get(base.goodsType, { params })
   }
 }
 

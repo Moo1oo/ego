@@ -6,6 +6,9 @@
             <div class="title">
                 产品类型列表
             </div>
+            <div class="tree">
+                <GoodsTree @goodsType="goodsType"></GoodsTree>
+            </div>
         </div>
       </div></el-col>
       <el-col :span="20"><div class="grid-content bg-purple">
@@ -49,8 +52,8 @@
                         </el-form-item>
                         </el-col>
                     </el-form-item>
-                    <el-form-item label="商品图片" prop="image">
-                        <el-button type="primary" size="small">上传图片</el-button>
+                    <el-form-item label="图片上传" prop="image">
+                        <AddPhoto></AddPhoto>
                     </el-form-item>
                     <el-form-item label="商品描述" prop="descs">
                         富文本编辑器
@@ -68,11 +71,17 @@
 </template>
 
 <script>
+import GoodsTree from './GoodsTree.vue'
+import AddPhoto from './AddPhoto.vue'
 export default {
+  components: {
+    GoodsTree,
+    AddPhoto
+  },
   data () {
     return {
       goodsForm: {
-        category: '111', // 所属分类
+        category: '', // 所属分类
         title: '', // 商品名称
         price: '',
         num: '',
@@ -126,6 +135,9 @@ export default {
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
+    },
+    goodsType (val) {
+      this.goodsForm.category = val.label
     }
   }
 }
