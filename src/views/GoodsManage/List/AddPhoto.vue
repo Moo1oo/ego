@@ -1,15 +1,18 @@
 <template>
   <div>
     <el-upload
-      action="https://jsonplaceholder.typicode.com/posts/"
+      :action="url"
       list-type="picture-card"
       ref="upload"
+      :limit= '2'
       :on-preview="handlePictureCardPreview"
       :on-success="handleSuccess"
-      :on-remove="handleRemove">
+      :on-remove="handleRemove"
+      :on-exceed="handleExceed">
     <i class="el-icon-plus"></i>
     </el-upload>
-    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+    <div v-if="filelist.length>1" class="el-upload__tip" slot="tip" style="color: red;">只能上传jpg/png格式，只能上传2张图片</div>
+    <!-- <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button> -->
     <el-dialog :visible.sync="dialogVisible">
       <img width="100%" :src="dialogImageUrl" alt="">
     </el-dialog>
@@ -17,11 +20,14 @@
 </template>
 
 <script>
+import { upload } from '../../../api/base'
 export default {
   data () {
     return {
       dialogImageUrl: '',
-      dialogVisible: false
+      dialogVisible: false,
+      url: upload,
+      filelist: []
     }
   },
   methods: {
@@ -37,6 +43,10 @@ export default {
     },
     handleSuccess (response, file, fileList) {
       console.log('uploadSuccess', response, file, fileList)
+      this.filelist = fileList
+    },
+    handleExceed (files, fileList) {
+      console.log('上传图片超出的', files, fileList)
     }
   }
 }

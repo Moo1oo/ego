@@ -8,7 +8,9 @@ const base = {
   goodsList: '/api/goods/projectList', // 产品列表
   goodsSearch: '/api/goods/search', // 产品查询
   goodDeleteById: '/api/goods/deleteItemById', // 通过ID删除商品
-  goodsType: '/api//goods/itemCategory/selectItemCategoryByParentId'
+  goodsType: '/api/goods/itemCategory/selectItemCategoryByParentId'
 }
+
+export const upload = '/api/upload'
 
 export default base

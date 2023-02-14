@@ -56,7 +56,7 @@
                         <AddPhoto></AddPhoto>
                     </el-form-item>
                     <el-form-item label="商品描述" prop="descs">
-                        富文本编辑器
+                        <Editor @editorData="editorData"></Editor>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="submitForm('ruleForm')">立即添加</el-button>
@@ -73,10 +73,12 @@
 <script>
 import GoodsTree from './GoodsTree.vue'
 import AddPhoto from './AddPhoto.vue'
+import Editor from './Editor.vue'
 export default {
   components: {
     GoodsTree,
-    AddPhoto
+    AddPhoto,
+    Editor
   },
   data () {
     return {
@@ -138,6 +140,9 @@ export default {
     },
     goodsType (val) {
       this.goodsForm.category = val.label
+    },
+    editorData (val) {
+      this.goodsForm.descs = val
     }
   }
 }
