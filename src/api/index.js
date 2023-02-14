@@ -26,6 +26,14 @@ const api = {
   },
   getGoodsType (params) {
     return axios.get(base.goodsType, { params })
+  },
+  // 登录
+  login (params) {
+    return axios.post(base.login, params)
+  },
+  // 用户权限 token
+  permission (params) {
+    return axios.get(base.permission, { params })
   }
 }
 

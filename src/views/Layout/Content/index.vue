@@ -8,7 +8,7 @@
       <div class="right">
         <span>当前时间：{{ nowTime }}</span>
         <span class="line">|</span>
-        <span>欢迎：xxx</span>
+        <span>欢迎：{{ userInfo.user }}</span>
         <span class="line">|</span>
         <span class="exit">
           <i class="iconfont icon-sign-out"></i>
@@ -21,12 +21,16 @@
 
 <script>
 import dayjs from 'dayjs'
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
       showFirst: true,
       nowTime: ''
     }
+  },
+  computed: {
+    ...mapState('loginModule', ['userInfo'])
   },
   methods: {
     changemenu () {

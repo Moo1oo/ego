@@ -8,7 +8,10 @@ const base = {
   goodsList: '/api/goods/projectList', // 产品列表
   goodsSearch: '/api/goods/search', // 产品查询
   goodDeleteById: '/api/goods/deleteItemById', // 通过ID删除商品
-  goodsType: '/api/goods/itemCategory/selectItemCategoryByParentId'
+  goodsType: '/api/goods/itemCategory/selectItemCategoryByParentId',
+  // 登录接口
+  login: '/api/login', // 登录的时候传的是账号密码user pwd
+  permission: 'api/permission'// 返回token，用户权限标识
 }
 
 export const upload = '/api/upload'

@@ -45,14 +45,14 @@
             <el-menu-item index="4-2" disabled>广告管理</el-menu-item>
         </el-menu-item-group>
     </el-submenu>
-    <el-submenu index="5" disabled>
+    <el-submenu index="/system">
         <template slot="title">
             <i class="el-icon-setting"></i>
             <span slot="title">系统管理</span>
         </template>
         <el-menu-item-group>
-            <el-menu-item index="5-1">角色管理</el-menu-item>
-            <el-menu-item index="5-2">部门管理</el-menu-item>
+            <el-menu-item index="/system/role">角色管理</el-menu-item>
+            <el-menu-item index="/system/department">部门管理</el-menu-item>
         </el-menu-item-group>
     </el-submenu>
     </el-menu>
