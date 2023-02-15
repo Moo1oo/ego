@@ -13,7 +13,13 @@ router.beforeEach((to, from, next) => {
     const token = store.state.loginModule.userInfo.token
     // const token = '123'
     if (token) {
-      next()
+      // 是否有导航存储到vuex仓库里，如果有，则进入，如果没有，则在此处获取导航
+      if (store.state.menu.dyMenu.length > 0) {
+        next()
+      } else {
+        // 没有导航的或就获取导航
+        store.dispatch('menu/getMenuList')
+      }
     } else {
       next('/login')
     }
