@@ -10,7 +10,7 @@
         <span class="line">|</span>
         <span>欢迎：{{ userInfo.user }}</span>
         <span class="line">|</span>
-        <span class="exit">
+        <span class="exit" @click="logOut">
           <i class="iconfont icon-sign-out"></i>
         </span>
       </div>
@@ -21,7 +21,7 @@
 
 <script>
 import dayjs from 'dayjs'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
   data () {
     return {
@@ -33,9 +33,18 @@ export default {
     ...mapState('loginModule', ['userInfo'])
   },
   methods: {
+    ...mapMutations('loginModule', ['deleteUser']),
+    ...mapMutations('menu', ['deleteMenu']),
     changemenu () {
       this.showFirst = !this.showFirst
       this.$emit('changeMenu', !this.showFirst)
+    },
+    logOut () {
+      // 这里使用了vuex的持久化，不能用localStorage删除
+      this.deleteUser()
+      this.deleteMenu()
+      console.log('userinfo', this.userInfo)
+      this.$router.replace('/login')
     }
   },
   created () {

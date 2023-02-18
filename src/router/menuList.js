@@ -1,6 +1,7 @@
 const menuList = [
   {
     path: '/goods',
+    name: 'Goods',
     component: () => import('../views/GoodsManage'),
     children: [
       {

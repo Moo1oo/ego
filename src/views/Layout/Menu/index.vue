@@ -45,7 +45,7 @@
             <el-menu-item index="4-2" disabled>广告管理</el-menu-item>
         </el-menu-item-group>
     </el-submenu>
-    <el-submenu index="/system">
+    <el-submenu index="/system" v-show="dyMenu[0].children.length>4">
         <template slot="title">
             <i class="el-icon-setting"></i>
             <span slot="title">系统管理</span>
@@ -60,8 +60,16 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   props: ['isCollapse'],
+  computed: {
+    ...mapState('menu', ['dyMenu'])
+  },
+  mounted () {
+    console.log('在首页中输出vuex中的动态菜单', this.dyMenu)
+    console.log(this.dyMenu[0].children)
+  },
   methods: {
     activeMenu () {
       let path = this.$route.path
